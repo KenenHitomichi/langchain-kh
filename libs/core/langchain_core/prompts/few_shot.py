@@ -388,8 +388,12 @@ class FewShotChatMessagePromptTemplate(
         Returns:
             A list of formatted messages with all template variables filled in.
         """
+        # Filter kwargs
+        filtered_kwargs = kwargs
+        if (self.input_variables):
+            filtered_kwargs = {k: kwargs[k] for k in self.input_variables if k in kwargs}
         # Get the examples to use.
-        examples = self._get_examples(**kwargs)
+        examples = self._get_examples(**filtered_kwargs)
         examples = [
             {k: e[k] for k in self.example_prompt.input_variables} for e in examples
         ]
@@ -410,8 +414,12 @@ class FewShotChatMessagePromptTemplate(
         Returns:
             A list of formatted messages with all template variables filled in.
         """
+        # Filter kwargs
+        filtered_kwargs = kwargs
+        if (self.input_variables):
+            filtered_kwargs = {k: kwargs[k] for k in self.input_variables if k in kwargs}
         # Get the examples to use.
-        examples = await self._aget_examples(**kwargs)
+        examples = self._get_examples(**filtered_kwargs)
         examples = [
             {k: e[k] for k in self.example_prompt.input_variables} for e in examples
         ]
